@@ -1,5 +1,6 @@
 package com.avoid.lwjgl2;
 
+import com.avoid.config.GameConfig;
 import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -18,8 +19,8 @@ public class Lwjgl2Launcher {
     private static LwjglApplicationConfiguration getDefaultConfiguration() {
         LwjglApplicationConfiguration configuration = new LwjglApplicationConfiguration();
         configuration.title = "avoid";
-        configuration.width = 640;
-        configuration.height = 480;
+        configuration.width = (int) GameConfig.WIDTH;
+        configuration.height = (int)  GameConfig.HEIGHT;
         //// This prevents a confusing error that would appear after exiting normally.
         configuration.forceExit = false;
 
