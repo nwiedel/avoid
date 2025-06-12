@@ -28,7 +28,7 @@ public class ViewportUtils {
         }
 
         // Farbe des Renderers abspeichern
-        Color oldColor = renderer.getColor();
+        Color oldColor = new Color(renderer.getColor());
 
         int worldWidth = (int) viewport.getWorldWidth();
         int worldHeight = (int) viewport.getWorldHeight();
@@ -44,7 +44,6 @@ public class ViewportUtils {
         for (int x = -doubleWorldWidth; x < doubleWorldWidth; x++){
             renderer.line(x,-doubleWorldHeight, x, doubleWorldHeight);
             count++;
-            System.out.println(count);
         }
         // horizontale Linien
         for (int y = -doubleWorldHeight; y < doubleWorldHeight; y++){
