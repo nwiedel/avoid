@@ -4,6 +4,7 @@ import com.avoid.config.GameConfig;
 import com.avoid.entity.Player;
 import com.avoid.util.Utilities;
 import com.avoid.util.ViewportUtils;
+import com.avoid.util.debug.DebugCameraController;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -23,6 +24,8 @@ public class GameScreen implements Screen {
 
     private Player player;
 
+    private DebugCameraController debugCameraController;
+
     @Override
     public void show() {
         camera = new OrthographicCamera();
@@ -30,13 +33,23 @@ public class GameScreen implements Screen {
         renderer = new ShapeRenderer();
 
         player = new Player();
-        float startPlayerX = GameConfig.WORLD_WIDTH / 2;
-        float startPlayerY = 1;
+
+//        float startPlayerX = GameConfig.WORLD_WIDTH / 2;
+//        float startPlayerY = 1;
+        float startPlayerX = 12;
+        float startPlayerY = 12;
+
         player.setPosition(startPlayerX, startPlayerY);
+
+        debugCameraController = new DebugCameraController();
+        debugCameraController.setStartPosition(GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y);
     }
 
     @Override
     public void render(float delta) {
+        debugCameraController.handleDebugInput(delta);
+        debugCameraController.applyTo(camera);
+
         // update world
         update(delta);
 
