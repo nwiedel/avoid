@@ -5,6 +5,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Logger;
 
@@ -56,7 +57,9 @@ public class DebugCameraController {
         }
 
         float moveSpeed = DEFAULT_MOVE_SPEED * delta;
+        float zoomSpeed = DEFAULT_ZOOM_SPEED * delta;
 
+        // Kamera Bewegung
         if (Gdx.input.isKeyPressed(DEFAULT_LEFT_KEY)){
             moveLeft(moveSpeed);
         }
@@ -69,6 +72,23 @@ public class DebugCameraController {
         else if (Gdx.input.isKeyPressed(DEFAULT_DOWN_KEY)){
             moveDown(moveSpeed);
         }
+
+        // Zoom Kontrolle
+        if (Gdx.input.isKeyPressed(DEFAULT_ZOOM_IN_KEY)){
+            zoomIn(zoomSpeed);
+        } else if(Gdx.input.isKeyPressed(DEFAULT_ZOOM_OUT_KEY)){
+            zoomOut(zoomSpeed);
+        }
+
+        // Reset Kamera
+        if(Gdx.input.isKeyPressed(DEFAULT_RESET_KEY)){
+            reset();
+        }
+
+        // Log Kontrolle
+        if (Gdx.input.isKeyPressed(DEFAULT_LOG_KEY)){
+            logDebug();
+        }
     }
 
     // -- private Methoden --
@@ -76,6 +96,10 @@ public class DebugCameraController {
         position.set(x, y);
     }
 
+    private void setZoom(float value) {
+        zoom = MathUtils.clamp(value, DEFAULT_MAX_ZOOM_IN, DEFAULT_MAX_ZOOM_OUT);
+
+    }
     private void moveCamera(float xSpeed, float ySpeed){
         setPosition(position.x + xSpeed, position.y + ySpeed);
     }
@@ -91,5 +115,20 @@ public class DebugCameraController {
     }
     private void moveDown(float speed){
         moveCamera(0, -speed);
+    }
+
+    private void zoomIn(float zoomSpeed){
+        setZoom(zoom - zoomSpeed);
+    }
+    private void zoomOut(float zoomSpeed){
+        setZoom(zoom + zoomSpeed);
+    }
+
+    private void reset(){
+        position.set(startPosition);
+        setZoom(1.0f);
+    }
+    private void logDebug(){
+        log.debug("position = " + position + " zoom = " + zoom);
     }
 }
