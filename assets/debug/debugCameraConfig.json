@@ -1,0 +1,20 @@
+{
+  "maxZoomIn": "0.20",
+  "maxZoomOut": "5",
+  "moveSpeed": "20",
+  "zoomSpeed": "2",
+
+  // Bewegungstasten
+  "upKey": "W",
+  "leftKey": "A",
+  "downKey": "S",
+  "rightKey": "D",
+
+  // Zoomtasten
+  "zoomInKey": ",",
+  "zoomOutKey": ".",
+
+  // Reset und Logging
+  "resetKey": "Delete",
+  "logKey": "Enter"
+}
