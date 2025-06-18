@@ -66,7 +66,6 @@ public class DebugCameraConfig {
     private FileHandle fileHandle;
 
     // -- Konstruktor --
-
     public DebugCameraConfig() {
         init();
     }
@@ -80,7 +79,7 @@ public class DebugCameraConfig {
         }
         else {
             log.info("Die Datei existiert nicht! Benutze Defaults! " + FILE_PATH);
-            setupDefauts();
+            setupDefaults();
         }
     }
 
@@ -94,13 +93,23 @@ public class DebugCameraConfig {
             maxZoomOut = root.getFloat(MAX_ZOOM_OUT, DEFAULT_MAX_ZOOM_OUT);
             moveSpeed = root.getFloat(MOVE_SPEED, DEFAULT_MOVE_SPEED);
             zoomSpeed = root.getFloat(ZOOM_SPEED, DEFAULT_ZOOM_SPEED);
+
+            leftKey = getInputKeyValue(root, LEFT_KEY, DEFAULT_LEFT_KEY);
+            rightKey = getInputKeyValue(root, RIGHT_KEY, DEFAULT_RIGHT_KEY);
+            upKey = getInputKeyValue(root, UP_KEY, DEFAULT_UP_KEY);
+            downKey = getInputKeyValue(root, DOWN_KEY, DEFAULT_DOWN_KEY);
+
+            zoomInKey = getInputKeyValue(root, ZOOM_IN_KEY, DEFAULT_ZOOM_IN_KEY);
+            zoomOutKey = getInputKeyValue(root, ZOOM_OUT_KEY, DEFAULT_ZOOM_OUT_KEY);
+            resetKey = getInputKeyValue(root, RESET_KEY, DEFAULT_RESET_KEY);
+            logKey = getInputKeyValue(root, LOG_KEY, DEFAULT_LOG_KEY);
         }catch (Exception e){
             log.error("Fehler beim laden! " + FILE_PATH + " Benutze Defaults!");
-            setupDefauts();
+            setupDefaults();
         }
     }
 
-    private void setupDefauts(){
+    private void setupDefaults(){
         maxZoomIn = DEFAULT_MAX_ZOOM_IN;
         maxZoomOut = DEFAULT_MAX_ZOOM_OUT;
         moveSpeed = DEFAULT_MOVE_SPEED;
@@ -116,5 +125,36 @@ public class DebugCameraConfig {
 
         resetKey = DEFAULT_RESET_KEY;
         logKey = DEFAULT_LOG_KEY;
+    }
+
+    public float getMaxZoomIn() {
+        return maxZoomIn;
+    }
+
+    public float getMaxZoomOut() {
+        return maxZoomOut;
+    }
+
+    public float getMoveSpeed() {
+        return moveSpeed;
+    }
+
+    public float getZoomSpeed() {
+        return zoomSpeed;
+    }
+
+    public boolean isLeftPressed(){ return Gdx.input.isKeyPressed(leftKey); }
+    public boolean isRightPressed(){ return Gdx.input.isKeyPressed(rightKey); }
+    public boolean isUpPressed(){ return Gdx.input.isKeyPressed(upKey); }
+    public boolean isDownPressed(){ return Gdx.input.isKeyPressed(downKey); }
+
+    public boolean isZoomInPressed(){ return Gdx.input.isKeyPressed(zoomInKey); }
+    public boolean isZoomOutPressed(){ return Gdx.input.isKeyPressed(zoomOutKey); }
+    public boolean isResetPressed(){ return Gdx.input.isKeyPressed(resetKey); }
+    public boolean isLogPressed(){ return Gdx.input.isKeyPressed(logKey); }
+
+    private static int getInputKeyValue(JsonValue root, String name, int defaultInput){
+        String keyString = root.getString(name, Input.Keys.toString(defaultInput));
+        return Input.Keys.valueOf(keyString);
     }
 }
