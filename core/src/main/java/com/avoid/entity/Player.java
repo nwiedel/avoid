@@ -54,4 +54,8 @@ public class Player {
     public float getY() {
         return y;
     }
+
+    public float getWidth() {
+        return SIZE;
+    }
 }
