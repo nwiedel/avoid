@@ -38,6 +38,8 @@ public class GameOldScreen implements Screen {
     private BitmapFont font;
     private final GlyphLayout layout = new GlyphLayout();
 
+    private DebugCameraController debugCameraController;
+
     private Player player;
     private Array<Obstacle> obstacles = new Array<>();
     private float obstacleTimer;private float scoreTimer;
@@ -46,7 +48,6 @@ public class GameOldScreen implements Screen {
     private int displayScore;
     private DifficultyLevel difficultyLevel = DifficultyLevel.MEDIUM;
 
-    private DebugCameraController debugCameraController;
 
     @Override
     public void show() {
@@ -59,15 +60,15 @@ public class GameOldScreen implements Screen {
         batch = new SpriteBatch();
         font = new BitmapFont(Gdx.files.internal(AssetPaths.UI_FONT));
 
+        debugCameraController = new DebugCameraController();
+        debugCameraController.setStartPosition(GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y);
+
         player = new Player();
 
         float startPlayerX = GameConfig.WORLD_WIDTH / 2;
         float startPlayerY = 1;
 
         player.setPosition(startPlayerX, startPlayerY);
-
-        debugCameraController = new DebugCameraController();
-        debugCameraController.setStartPosition(GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y);
     }
 
     @Override
