@@ -1,6 +1,7 @@
 package com.avoid.screen;
 
 import com.avoid.assets.AssetPaths;
+import com.avoid.config.DifficultyLevel;
 import com.avoid.config.GameConfig;
 import com.avoid.entity.Obstacle;
 import com.avoid.entity.Player;
@@ -44,6 +45,7 @@ public class GameScreen implements Screen {
     private int lives = GameConfig.LIVES_START;
     private int score;
     private int displayScore;
+    private DifficultyLevel difficultyLevel = DifficultyLevel.MEDIUM;
 
     private DebugCameraController debugCameraController;
 
@@ -147,6 +149,7 @@ public class GameScreen implements Screen {
             float obstacleY = GameConfig.WORLD_HEIGHT;
 
             Obstacle obstacle = new Obstacle();
+            obstacle.setYSpeed(difficultyLevel.getObstacleSpeed());
             obstacle.setPosition(obstacleX, obstacleY);
             obstacles.add(obstacle);
             obstacleTimer = 0f;
@@ -205,7 +208,7 @@ public class GameScreen implements Screen {
         if(displayScore < score){
             displayScore = Math.min(
                 score,
-                displayScore + (int)(40 * delta));
+                displayScore + (int)(60 * delta));
         }
     }
 

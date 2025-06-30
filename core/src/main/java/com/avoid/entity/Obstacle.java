@@ -1,5 +1,6 @@
 package com.avoid.entity;
 
+import com.avoid.config.GameConfig;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -11,7 +12,7 @@ public class Obstacle extends GameObjectBase {
     private static final float BOUNDS_RADIUS = 0.3f;
     private static final float SIZE = 2 * BOUNDS_RADIUS;
 
-    private float ySpeed = 0.1f;
+    private float ySpeed = GameConfig.MEDIUM_OBSTACLE_SPEED;
     private boolean hit;
 
     public Obstacle(){
@@ -31,6 +32,10 @@ public class Obstacle extends GameObjectBase {
         boolean overlaps = Intersector.overlaps(playerBounds, getBounds());
         hit = overlaps;
         return overlaps;
+    }
+
+    public void setYSpeed(float ySpeed) {
+        this.ySpeed = ySpeed;
     }
 
     public boolean isNotHit(){
