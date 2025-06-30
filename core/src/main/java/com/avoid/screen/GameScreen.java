@@ -86,6 +86,11 @@ public class GameScreen implements Screen {
     }
 
     private void update(float delta){
+        if (isGameOver()){
+            log.debug("GAME OVER!");
+            return;
+        }
+
         updatePlayer();
         updateObstacles(delta);
         updateScore(delta);
@@ -97,9 +102,13 @@ public class GameScreen implements Screen {
         }
     }
 
+    private boolean isGameOver(){
+        return lives <= 0;
+    }
+
     private boolean isPlayerCollidingWithObstacle(){
         for (Obstacle obstacle : obstacles){
-            if (obstacle.isPlayerColliding(player)){
+            if (obstacle.isNotHit() && obstacle.isPlayerColliding(player)){
                 return true;
             }
         }
