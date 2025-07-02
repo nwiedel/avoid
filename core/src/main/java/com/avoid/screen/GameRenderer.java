@@ -33,8 +33,11 @@ public class GameRenderer implements Disposable {
 
     private DebugCameraController debugCameraController;
 
+    private final GameController controller;
+
     // -- Konstruktoren --
-    public GameRenderer(){
+    public GameRenderer(GameController controller){
+        this.controller = controller;
         init();
     }
 
@@ -80,17 +83,17 @@ public class GameRenderer implements Disposable {
 
     // -- private Methoden --
     private void renderUI(){
-
+        hudViewport.apply();
         batch.setProjectionMatrix(hudCamera.combined);
         batch.begin();
 
-        String livesText = "LIVES: " + lives;
+        String livesText = "LIVES: " + controller.getLives();
         layout.setText(font, livesText);
         font.draw(batch, livesText,
             20,
             GameConfig.HUD_HEIGHT - layout.height);
 
-        String scoreText = "SCORE: " + displayScore;
+        String scoreText = "SCORE: " + controller.getDisplayScore();
         layout.setText(font, scoreText);
         font.draw(batch, scoreText,
             GameConfig.HUD_WIDTH - layout.width - 20,
@@ -100,7 +103,7 @@ public class GameRenderer implements Disposable {
     }
 
     private void renderDebug(){
-
+        viewport.apply();
         renderer.setProjectionMatrix(camera.combined);
         renderer.begin(ShapeRenderer.ShapeType.Line);
 
@@ -112,8 +115,8 @@ public class GameRenderer implements Disposable {
     }
 
     private void drawDebug(){
-        player.drawDebug(renderer);
-        for (Obstacle obstacle : obstacles){
+        controller.getPlayer().drawDebug(renderer);
+        for (Obstacle obstacle : controller.getObstacles()){
             obstacle.drawDebug(renderer);
         }
     }
