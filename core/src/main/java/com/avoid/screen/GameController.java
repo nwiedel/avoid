@@ -36,7 +36,7 @@ public class GameController {
         player.setPosition(startPlayerX, startPlayerY);
     }
 
-    // -- öffentliche Methoden --
+    // -------------------- öffentliche Methoden --------------------
     public void update(float delta){
         if (isGameOver()){
             log.debug("GAME OVER!");
@@ -70,9 +70,10 @@ public class GameController {
         return displayScore;
     }
 
-    // -- private Methoden --
+    // -------------------- private Methoden --------------------
     private boolean isGameOver(){
-        return lives <= 0;
+        return false;
+        //return lives <= 0;
     }
 
     private boolean isPlayerCollidingWithObstacle(){
@@ -104,22 +105,35 @@ public class GameController {
             obstacle.update();
         }
         createNewObstacle(delta);
+        removePassedObstacles();
     }
 
     private void createNewObstacle(float delta){
         obstacleTimer += delta;
 
         if (obstacleTimer >= GameConfig.OBSTACLE_SPAWN_TIME){
-            float min = 0f;
+            float min = Obstacle.SIZE / 2f;
             float max = GameConfig.WORLD_WIDTH;
             float obstacleX = MathUtils.random(min, max);
-            float obstacleY = GameConfig.WORLD_HEIGHT;
+            float obstacleY = GameConfig.WORLD_HEIGHT - Obstacle.SIZE / 2f;
 
             Obstacle obstacle = new Obstacle();
             obstacle.setYSpeed(difficultyLevel.getObstacleSpeed());
             obstacle.setPosition(obstacleX, obstacleY);
             obstacles.add(obstacle);
             obstacleTimer = 0f;
+        }
+    }
+
+    private void removePassedObstacles(){
+        if (obstacles.size > 0){
+            Obstacle first = obstacles.first();
+
+            float minObstacleY = -Obstacle.SIZE;
+
+            if(first.getY() < minObstacleY){
+                obstacles.removeValue(first,true);
+            }
         }
     }
 
