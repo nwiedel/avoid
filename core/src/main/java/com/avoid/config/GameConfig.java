@@ -24,5 +24,11 @@ public class GameConfig {
     public static final float MEDIUM_OBSTACLE_SPEED = 0.15f;
     public static final float HARD_OBSTACLE_SPEED = 0.18f;
 
+    public static final float PLAYER_BOUNDS_RADIUS = 0.4f;
+    public static final float PLAYER_SIZE = 2 * PLAYER_BOUNDS_RADIUS;
+
+    public static final float OBSTACLE_BOUNDS_RADIUS = 0.3f;
+    public static final float OBSTACLE_SIZE = 2 * OBSTACLE_BOUNDS_RADIUS;
+
     private GameConfig(){}
 }

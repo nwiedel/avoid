@@ -36,8 +36,9 @@ public class GameController {
     private void init(){
         // Spieler erstellen und positionieren
         player = new Player();
-        float startPlayerX = GameConfig.WORLD_WIDTH / 2;
-        float startPlayerY = 1;
+        float halfPlayerSize = GameConfig.PLAYER_SIZE / 2f;
+        float startPlayerX = GameConfig.WORLD_WIDTH / 2 - halfPlayerSize;
+        float startPlayerY = 1 - halfPlayerSize;
         player.setPosition(startPlayerX, startPlayerY);
 
         // Pool von Obstacles erstellen
@@ -109,8 +110,8 @@ public class GameController {
 
     private void blockPlayerFromLeavingWorld(){
         float playerX = MathUtils.clamp(player.getX(),
-            player.getWidth() / 2,
-            GameConfig.WORLD_WIDTH - player.getWidth() / 2);
+            0,
+            GameConfig.WORLD_WIDTH - player.getWidth());
 
         player.setPosition(playerX, player.getY());
     }
@@ -127,10 +128,10 @@ public class GameController {
         obstacleTimer += delta;
 
         if (obstacleTimer >= GameConfig.OBSTACLE_SPAWN_TIME){
-            float min = Obstacle.SIZE / 2f;
-            float max = GameConfig.WORLD_WIDTH;
+            float min = 0;
+            float max = GameConfig.WORLD_WIDTH - GameConfig.OBSTACLE_SIZE;
             float obstacleX = MathUtils.random(min, max);
-            float obstacleY = GameConfig.WORLD_HEIGHT - Obstacle.SIZE / 2f;
+            float obstacleY = GameConfig.WORLD_HEIGHT;
 
             Obstacle obstacle = obstaclePool.obtain();
             obstacle.setYSpeed(difficultyLevel.getObstacleSpeed());
@@ -144,7 +145,7 @@ public class GameController {
         if (obstacles.size > 0){
             Obstacle first = obstacles.first();
 
-            float minObstacleY = -Obstacle.SIZE;
+            float minObstacleY = -GameConfig.OBSTACLE_SIZE;
 
             if(first.getY() < minObstacleY){
                 obstacles.removeValue(first,true);

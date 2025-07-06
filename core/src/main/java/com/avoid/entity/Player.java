@@ -8,12 +8,9 @@ import com.badlogic.gdx.math.Circle;
 
 public class Player extends GameObjectBase {
 
-    private static final float BOUNDS_RADIUS = 0.4f;
-    private static final float SIZE = 2 * BOUNDS_RADIUS;
-
     public Player(){
-        super(BOUNDS_RADIUS);
-        setSize(SIZE, SIZE);
+        super(GameConfig.PLAYER_BOUNDS_RADIUS);
+        setSize(GameConfig.PLAYER_SIZE, GameConfig.PLAYER_SIZE);
     }
 
     public void update(){
