@@ -31,4 +31,6 @@ public class Player extends GameObjectBase {
     public float getWidth() {
         return SIZE;
     }
+
+    public float getHeight() { return SIZE; }
 }

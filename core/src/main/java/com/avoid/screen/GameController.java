@@ -2,11 +2,14 @@ package com.avoid.screen;
 
 import com.avoid.config.DifficultyLevel;
 import com.avoid.config.GameConfig;
+import com.avoid.entity.Background;
 import com.avoid.entity.Obstacle;
 import com.avoid.entity.Player;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
+import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.Pools;
 
 public class GameController {
 
@@ -16,11 +19,13 @@ public class GameController {
     // -- Attribute --
     private Player player;
     private Array<Obstacle> obstacles = new Array<>();
+    private Background background;
     private float obstacleTimer;private float scoreTimer;
     private int lives = GameConfig.LIVES_START;
     private int score;
     private int displayScore;
     private DifficultyLevel difficultyLevel = DifficultyLevel.MEDIUM;
+    private Pool<Obstacle> obstaclePool;
 
     // -- Konstruktoren --
     public GameController(){
@@ -34,6 +39,14 @@ public class GameController {
         float startPlayerX = GameConfig.WORLD_WIDTH / 2;
         float startPlayerY = 1;
         player.setPosition(startPlayerX, startPlayerY);
+
+        // Pool von Obstacles erstellen
+        obstaclePool = Pools.get(Obstacle.class, 40);
+
+        // Hintergrund erstellen
+        background = new Background();
+        background.setPosition(0, 0);
+        background.setSize(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT);
     }
 
     // -------------------- öffentliche Methoden --------------------
@@ -70,10 +83,12 @@ public class GameController {
         return displayScore;
     }
 
+    public Background getBackground(){ return background; }
+
     // -------------------- private Methoden --------------------
     private boolean isGameOver(){
+        // return lives <= 0;
         return false;
-        //return lives <= 0;
     }
 
     private boolean isPlayerCollidingWithObstacle(){
@@ -117,7 +132,7 @@ public class GameController {
             float obstacleX = MathUtils.random(min, max);
             float obstacleY = GameConfig.WORLD_HEIGHT - Obstacle.SIZE / 2f;
 
-            Obstacle obstacle = new Obstacle();
+            Obstacle obstacle = obstaclePool.obtain();
             obstacle.setYSpeed(difficultyLevel.getObstacleSpeed());
             obstacle.setPosition(obstacleX, obstacleY);
             obstacles.add(obstacle);
@@ -133,6 +148,7 @@ public class GameController {
 
             if(first.getY() < minObstacleY){
                 obstacles.removeValue(first,true);
+                obstaclePool.free(first);
             }
         }
     }
