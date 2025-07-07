@@ -26,6 +26,8 @@ public class GameController {
     private int displayScore;
     private DifficultyLevel difficultyLevel = DifficultyLevel.MEDIUM;
     private Pool<Obstacle> obstaclePool;
+    private final float startPlayerX = (GameConfig.WORLD_WIDTH - GameConfig.PLAYER_SIZE) / 2 ;
+    private final float startPlayerY = 1 - GameConfig.PLAYER_SIZE / 2;
 
     // -- Konstruktoren --
     public GameController(){
@@ -36,9 +38,7 @@ public class GameController {
     private void init(){
         // Spieler erstellen und positionieren
         player = new Player();
-        float halfPlayerSize = GameConfig.PLAYER_SIZE / 2f;
-        float startPlayerX = GameConfig.WORLD_WIDTH / 2 - halfPlayerSize;
-        float startPlayerY = 1 - halfPlayerSize;
+
         player.setPosition(startPlayerX, startPlayerY);
 
         // Pool von Obstacles erstellen
@@ -53,7 +53,6 @@ public class GameController {
     // -------------------- öffentliche Methoden --------------------
     public void update(float delta){
         if (isGameOver()){
-            log.debug("GAME OVER!");
             return;
         }
 
@@ -65,6 +64,12 @@ public class GameController {
         if (isPlayerCollidingWithObstacle()){
             log.debug("Kollision erkannt!");
             lives--;
+
+            if(isGameOver()){
+                log.debug("GAME OVER!");
+            }else {
+                restart();
+            }
         }
     }
 
@@ -87,9 +92,14 @@ public class GameController {
     public Background getBackground(){ return background; }
 
     // -------------------- private Methoden --------------------
+    private void restart(){
+        obstaclePool.freeAll(obstacles);
+        obstacles.clear();
+        player.setPosition(startPlayerX, startPlayerY);
+    }
+
     private boolean isGameOver(){
-        // return lives <= 0;
-        return false;
+         return lives <= 0;
     }
 
     private boolean isPlayerCollidingWithObstacle(){
