@@ -5,6 +5,8 @@ import com.avoid.config.GameConfig;
 import com.avoid.entity.Background;
 import com.avoid.entity.Obstacle;
 import com.avoid.entity.Player;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Logger;
@@ -91,15 +93,15 @@ public class GameController {
 
     public Background getBackground(){ return background; }
 
+    public boolean isGameOver(){
+        return lives <= 0;
+    }
+
     // -------------------- private Methoden --------------------
     private void restart(){
         obstaclePool.freeAll(obstacles);
         obstacles.clear();
         player.setPosition(startPlayerX, startPlayerY);
-    }
-
-    private boolean isGameOver(){
-         return lives <= 0;
     }
 
     private boolean isPlayerCollidingWithObstacle(){
@@ -113,8 +115,16 @@ public class GameController {
     }
 
     private void updatePlayer(){
-        //log.debug("playerX = " + player.getX() + " playerY = " + player.getY());
-        player.update();
+        float xSpeed = 0f;
+
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+            xSpeed = GameConfig.MAX_PLAYER_X_SPEED;
+        }else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+            xSpeed = -GameConfig.MAX_PLAYER_X_SPEED;
+        }
+
+        player.setX(player.getX() + xSpeed);
+
         blockPlayerFromLeavingWorld();
     }
 
