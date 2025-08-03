@@ -1,5 +1,6 @@
 package com.avoid.screen;
 
+import com.avoid.assets.AssetDescriptors;
 import com.avoid.assets.AssetPaths;
 import com.avoid.config.GameConfig;
 import com.avoid.entity.Background;
@@ -8,6 +9,7 @@ import com.avoid.entity.Player;
 import com.avoid.util.ViewportUtils;
 import com.avoid.util.debug.DebugCameraController;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -39,13 +41,15 @@ public class GameRenderer implements Disposable {
     private DebugCameraController debugCameraController;
 
     private final GameController controller;
+    private final AssetManager assetManager;
 
     private Texture playerTexture;
     private Texture obstacleTexture;
     private Texture backgroundTexture;
 
     // -------------------- Konstruktoren --------------------
-    public GameRenderer(GameController controller){
+    public GameRenderer(AssetManager assetManager, GameController controller){
+        this.assetManager = assetManager;
         this.controller = controller;
         init();
     }
@@ -59,14 +63,14 @@ public class GameRenderer implements Disposable {
         hudCamera = new OrthographicCamera();
         hudViewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT, hudCamera);
         batch = new SpriteBatch();
-        font = new BitmapFont(Gdx.files.internal(AssetPaths.UI_FONT));
+        font = assetManager.get(AssetDescriptors.FONT);
 
         debugCameraController = new DebugCameraController();
         debugCameraController.setStartPosition(GameConfig.WORLD_CENTER_X, GameConfig.WORLD_CENTER_Y);
 
-        playerTexture = new Texture(Gdx.files.internal("gameplay/player.png"));
-        obstacleTexture = new Texture(Gdx.files.internal("gameplay/obstacle.png"));
-        backgroundTexture = new Texture(Gdx.files.internal("gameplay/background.png"));
+        playerTexture = assetManager.get(AssetDescriptors.PLAYER);
+        obstacleTexture = assetManager.get(AssetDescriptors.OBSTACLE);
+        backgroundTexture = assetManager.get(AssetDescriptors.BACKGROUND);
     }
 
     // -------------------- öffentliche Methoden --------------------
@@ -108,10 +112,6 @@ public class GameRenderer implements Disposable {
     public void dispose() {
         renderer.dispose();
         batch.dispose();
-        font.dispose();
-        playerTexture.dispose();
-        obstacleTexture.dispose();
-        backgroundTexture.dispose();
     }
 
     // -------------------- private Methoden --------------------
