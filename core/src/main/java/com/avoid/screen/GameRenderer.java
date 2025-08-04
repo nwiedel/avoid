@@ -1,7 +1,6 @@
 package com.avoid.screen;
 
 import com.avoid.assets.AssetDescriptors;
-import com.avoid.assets.AssetPaths;
 import com.avoid.config.GameConfig;
 import com.avoid.entity.Background;
 import com.avoid.entity.Obstacle;
