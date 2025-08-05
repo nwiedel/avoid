@@ -1,4 +1,4 @@
-package com.avoid.screen;
+package com.avoid.screen.game;
 
 import com.avoid.AvoidGame;
 import com.avoid.assets.AssetDescriptors;
@@ -21,12 +21,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-
-        assetManager.load(AssetDescriptors.FONT);
-        assetManager.load(AssetDescriptors.GAME_PLAY);
-
-        assetManager.finishLoading();
-
         controller = new GameController();
         renderer = new GameRenderer(assetManager, controller);
     }

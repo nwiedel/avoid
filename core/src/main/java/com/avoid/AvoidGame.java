@@ -1,6 +1,7 @@
 package com.avoid;
 
-import com.avoid.screen.GameScreen;
+import com.avoid.screen.game.GameScreen;
+import com.avoid.screen.loading.LoadingScreen;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -18,7 +19,7 @@ public class AvoidGame extends Game {
         assetManager = new AssetManager();
         assetManager.getLogger().setLevel(Logger.DEBUG);
 
-        setScreen(new GameScreen(this));
+        setScreen(new LoadingScreen(this));
     }
 
     @Override

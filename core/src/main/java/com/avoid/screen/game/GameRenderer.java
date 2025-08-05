@@ -1,4 +1,4 @@
-package com.avoid.screen;
+package com.avoid.screen.game;
 
 import com.avoid.assets.AssetDescriptors;
 import com.avoid.assets.RegionNames;
