@@ -1,6 +1,7 @@
 package com.avoid.screen.loading;
 
 import com.avoid.AvoidGame;
+import com.avoid.assets.AssetDescriptors;
 import com.avoid.config.GameConfig;
 import com.avoid.screen.game.GameScreen;
 import com.avoid.util.Utilities;
@@ -25,6 +26,7 @@ public class LoadingScreen extends ScreenAdapter {
 
     private float progress;
     private float waitTime = 0.75f;
+    private boolean changeScreen;
 
     private final AvoidGame game;
     private final AssetManager assetManager;
@@ -42,6 +44,9 @@ public class LoadingScreen extends ScreenAdapter {
         camera = new OrthographicCamera();
         viewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT, camera);
         renderer = new ShapeRenderer();
+
+        assetManager.load(AssetDescriptors.FONT);
+        assetManager.load(AssetDescriptors.GAME_PLAY);
     }
 
     @Override
@@ -56,6 +61,10 @@ public class LoadingScreen extends ScreenAdapter {
         draw();
 
         renderer.end();
+
+        if (changeScreen){
+            game.setScreen(new GameScreen(game));
+        }
     }
 
     @Override
@@ -79,12 +88,12 @@ public class LoadingScreen extends ScreenAdapter {
         waitMillis(400);
 
         progress = assetManager.getProgress();
-        System.out.println(progress);
+
         // assetManager.update() ergibt true, wenn alles geladen ist!
         if (assetManager.update()){
             waitTime -= delta;
             if (waitTime <= 0){
-                game.setScreen(new GameScreen(game));
+                changeScreen = true;
             }
         }
     }
