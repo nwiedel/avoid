@@ -47,6 +47,7 @@ public class LoadingScreen extends ScreenAdapter {
 
         assetManager.load(AssetDescriptors.FONT);
         assetManager.load(AssetDescriptors.GAME_PLAY);
+        assetManager.load(AssetDescriptors.UI);
     }
 
     @Override
@@ -85,8 +86,7 @@ public class LoadingScreen extends ScreenAdapter {
 
     // -------------------- private Methoden --------------------
     private void update(float delta){
-        waitMillis(400);
-
+        
         progress = assetManager.getProgress();
 
         // assetManager.update() ergibt true, wenn alles geladen ist!
