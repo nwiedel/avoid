@@ -4,6 +4,7 @@ import com.avoid.AvoidGame;
 import com.avoid.assets.AssetDescriptors;
 import com.avoid.config.GameConfig;
 import com.avoid.screen.game.GameScreen;
+import com.avoid.screen.menu.MenuScreen;
 import com.avoid.util.Utilities;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
@@ -64,7 +65,7 @@ public class LoadingScreen extends ScreenAdapter {
         renderer.end();
 
         if (changeScreen){
-            game.setScreen(new GameScreen(game));
+            game.setScreen(new MenuScreen(game));
         }
     }
 
@@ -86,7 +87,7 @@ public class LoadingScreen extends ScreenAdapter {
 
     // -------------------- private Methoden --------------------
     private void update(float delta){
-        
+
         progress = assetManager.getProgress();
 
         // assetManager.update() ergibt true, wenn alles geladen ist!
