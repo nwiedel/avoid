@@ -8,12 +8,14 @@ import com.avoid.util.Utilities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -59,8 +61,42 @@ public class HighScoreScreen extends ScreenAdapter {
 
         TextureRegion backRegion = uiAtlas.findRegion(RegionNames.BACK);
         TextureRegion backPressedRegion = uiAtlas.findRegion(RegionNames.BACK_PRESSED);
-        
 
+        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
+
+        // Hintergrund
+        table.setBackground(new TextureRegionDrawable(backgroundRegion));
+
+        // Highscoretext
+        Label highScoreText = new Label("HIGHSCORE", labelStyle);
+
+        // Highscorelabel
+        Label highScoreLabel = new Label("100", labelStyle);
+
+        // back button
+        ImageButton backButton = new ImageButton(
+            new TextureRegionDrawable(backRegion),
+            new TextureRegionDrawable(backPressedRegion)
+        );
+        backButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                back();
+            }
+        });
+
+        // setup table
+        Table contenTable = new Table();
+        contenTable.defaults().pad(20);
+        contenTable.setBackground(new TextureRegionDrawable(panelRegion));
+
+        contenTable.add(highScoreText).row();
+        contenTable.add(highScoreLabel).row();
+        contenTable.add(backButton);
+
+        contenTable.center();
+
+        table.add(contenTable);
         table.center();
         table.setFillParent(true);
         table.pack();
@@ -92,8 +128,9 @@ public class HighScoreScreen extends ScreenAdapter {
     }
 
 
-    private void play(){
-        log.debug("Spiele!");
+    private void back(){
+        log.debug("BACK!");
+        game.setScreen(new MenuScreen(game));
     }
 
     private static ImageButton createButton(TextureAtlas atlas, String upRegionName, String downRegionName){

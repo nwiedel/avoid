@@ -4,6 +4,7 @@ import com.avoid.AvoidGame;
 import com.avoid.assets.AssetDescriptors;
 import com.avoid.assets.RegionNames;
 import com.avoid.config.GameConfig;
+import com.avoid.screen.game.GameScreen;
 import com.avoid.util.Utilities;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
@@ -130,10 +131,12 @@ public class MenuScreen extends ScreenAdapter {
 
     private void play(){
         log.debug("Spiele!");
+        game.setScreen(new GameScreen(game));
     }
 
     private void showHighscores(){
         log.debug("Zeige Highscore!");
+        game.setScreen(new HighScoreScreen(game));
     }
 
     private void showOptions(){
