@@ -1,5 +1,6 @@
 package com.avoid.screen.game;
 
+import com.avoid.common.GameManager;
 import com.avoid.config.DifficultyLevel;
 import com.avoid.config.GameConfig;
 import com.avoid.entity.Background;
@@ -69,6 +70,7 @@ public class GameController {
 
             if(isGameOver()){
                 log.debug("GAME OVER!");
+                GameManager.INSTANCE.updateHighScore(score);
             }else {
                 restart();
             }

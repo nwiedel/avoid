@@ -3,6 +3,7 @@ package com.avoid.screen.menu;
 import com.avoid.AvoidGame;
 import com.avoid.assets.AssetDescriptors;
 import com.avoid.assets.RegionNames;
+import com.avoid.common.GameManager;
 import com.avoid.config.GameConfig;
 import com.avoid.util.Utilities;
 import com.badlogic.gdx.Gdx;
@@ -71,7 +72,8 @@ public class HighScoreScreen extends ScreenAdapter {
         Label highScoreText = new Label("HIGHSCORE", labelStyle);
 
         // Highscorelabel
-        Label highScoreLabel = new Label("100", labelStyle);
+        String highScoreString = GameManager.INSTANCE.getHighScoreString();
+        Label highScoreLabel = new Label(highScoreString, labelStyle);
 
         // back button
         ImageButton backButton = new ImageButton(
