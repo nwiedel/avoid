@@ -3,6 +3,8 @@ package com.avoid.screen.menu;
 import com.avoid.AvoidGame;
 import com.avoid.assets.AssetDescriptors;
 import com.avoid.assets.RegionNames;
+import com.avoid.common.GameManager;
+import com.avoid.config.DifficultyLevel;
 import com.avoid.config.GameConfig;
 import com.avoid.util.Utilities;
 import com.badlogic.gdx.Gdx;
@@ -72,6 +74,7 @@ public class OptionsScreen extends ScreenAdapter {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 checkMark.setY(easy.getY() + 25);
+                GameManager.INSTANCE.updateDifficultyLevel(DifficultyLevel.EASY);
             }
         });
 
@@ -81,6 +84,7 @@ public class OptionsScreen extends ScreenAdapter {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 checkMark.setY(medium.getY() + 25);
+                GameManager.INSTANCE.updateDifficultyLevel(DifficultyLevel.MEDIUM);
             }
         });
 
@@ -90,6 +94,7 @@ public class OptionsScreen extends ScreenAdapter {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 checkMark.setY(hard.getY() + 25);
+                GameManager.INSTANCE.updateDifficultyLevel(DifficultyLevel.HARD);
             }
         });
 

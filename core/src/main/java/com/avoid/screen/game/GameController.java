@@ -27,7 +27,6 @@ public class GameController {
     private int lives = GameConfig.LIVES_START;
     private int score;
     private int displayScore;
-    private DifficultyLevel difficultyLevel = DifficultyLevel.MEDIUM;
     private Pool<Obstacle> obstaclePool;
     private final float startPlayerX = (GameConfig.WORLD_WIDTH - GameConfig.PLAYER_SIZE) / 2 ;
     private final float startPlayerY = 1 - GameConfig.PLAYER_SIZE / 2;
@@ -156,6 +155,7 @@ public class GameController {
             float obstacleY = GameConfig.WORLD_HEIGHT;
 
             Obstacle obstacle = obstaclePool.obtain();
+            DifficultyLevel difficultyLevel = GameManager.INSTANCE.getDifficultyLevel();
             obstacle.setYSpeed(difficultyLevel.getObstacleSpeed());
             obstacle.setPosition(obstacleX, obstacleY);
             obstacles.add(obstacle);
