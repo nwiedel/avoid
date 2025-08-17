@@ -102,6 +102,15 @@ public class OptionsScreen extends ScreenAdapter {
         checkMark = new Image(new TextureRegionDrawable(checkMarkRegion));
         checkMark.setPosition(medium.getX() + 50, medium.getY() + 40, Align.center);
 
+        DifficultyLevel difficultyLevel = GameManager.INSTANCE.getDifficultyLevel();
+
+        if(difficultyLevel.isEasy()){
+            checkMark.setY(easy.getY() + 25);
+        }
+        else if (difficultyLevel.isHard()){
+            checkMark.setY(hard.getY() + 25);
+        }
+
         ImageButton back = new ImageButton(
             new TextureRegionDrawable(uiAtlas.findRegion(RegionNames.BACK)),
             new TextureRegionDrawable(uiAtlas.findRegion(RegionNames.BACK_PRESSED))

@@ -2,6 +2,7 @@ package com.avoid.screen.game;
 
 import com.avoid.AvoidGame;
 import com.avoid.assets.AssetDescriptors;
+import com.avoid.screen.menu.MenuScreen;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 
@@ -29,6 +30,10 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         controller.update(delta);
         renderer.render(delta);
+
+        if (controller.isGameOver()){
+            game.setScreen(new MenuScreen(game));
+        }
     }
 
     @Override
