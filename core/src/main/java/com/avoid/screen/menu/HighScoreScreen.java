@@ -25,32 +25,16 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class HighScoreScreen extends ScreenAdapter {
+public class HighScoreScreen extends MenuScreenBase {
 
     private static final Logger log = new Logger(HighScoreScreen.class.getSimpleName(), Logger.DEBUG);
 
-    private final AvoidGame game;
-    private AssetManager assetManager;
-
-    private Viewport viewport;
-    private Stage stage;
-
     public HighScoreScreen(AvoidGame game) {
-        this.game = game;
-        assetManager = game.getAssetManager();
+        super(game);
     }
 
     @Override
-    public void show() {
-        viewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT);
-        stage = new Stage(viewport, game.getBatch());
-
-        Gdx.input.setInputProcessor(stage);
-
-        initUI();
-    }
-
-    private void initUI(){
+    protected Actor createUI(){
         Table table = new Table();
 
         TextureAtlas gamePlayAtlas = assetManager.get(AssetDescriptors.GAME_PLAY);
@@ -103,32 +87,8 @@ public class HighScoreScreen extends ScreenAdapter {
         table.setFillParent(true);
         table.pack();
 
-        stage.addActor(table);
+        return table;
     }
-
-    @Override
-    public void render(float delta) {
-        ScreenUtils.clear(Utilities.CORNFLOWER_BLUE);
-
-        stage.act();
-        stage.draw();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        viewport.update(width, height, true);
-    }
-
-    @Override
-    public void hide() {
-        dispose();
-    }
-
-    @Override
-    public void dispose() {
-        stage.dispose();
-    }
-
 
     private void back(){
         log.debug("BACK!");

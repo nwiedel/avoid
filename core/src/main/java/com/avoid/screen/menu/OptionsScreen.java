@@ -28,32 +28,18 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class OptionsScreen extends ScreenAdapter {
+public class OptionsScreen extends MenuScreenBase {
 
     private static final Logger log = new Logger(OptionsScreen.class.getName(), Logger.DEBUG);
 
-    private final AvoidGame game;
-    private final AssetManager assetManager;
-
-    private Viewport viewport;
-    private Stage stage;
     private Image checkMark;
 
     public OptionsScreen(AvoidGame game) {
-        this.game = game;
-        assetManager = game.getAssetManager();
+        super(game);
     }
 
     @Override
-    public void show() {
-        viewport = new FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT);
-        stage = new Stage(viewport, game.getBatch());
-
-        Gdx.input.setInputProcessor(stage);
-        createUI();
-    }
-
-    private void createUI(){
+    protected Actor createUI(){
         Table table = new Table();
         table.defaults().pad(15);
 
@@ -123,36 +109,15 @@ public class OptionsScreen extends ScreenAdapter {
             }
         });
 
-        stage.addActor(background);
-        stage.addActor(label);
-        stage.addActor(easy);
-        stage.addActor(medium);
-        stage.addActor(hard);
-        stage.addActor(checkMark);
-        stage.addActor(back);
-    }
+        table.addActor(background);
+        table.addActor(label);
+        table.addActor(easy);
+        table.addActor(medium);
+        table.addActor(hard);
+        table.addActor(checkMark);
+        table.addActor(back);
 
-    @Override
-    public void resize(int width, int height) {
-        viewport.update(width, height, true);
-    }
-
-    @Override
-    public void render(float delta) {
-
-        ScreenUtils.clear(Utilities.CORNFLOWER_BLUE);
-        stage.act();
-        stage.draw();
-    }
-
-    @Override
-    public void hide() {
-        dispose();
-    }
-
-    @Override
-    public void dispose() {
-        stage.dispose();
+        return table;
     }
 
     private static ImageButton createButton(TextureAtlas atlas, String regionName){
