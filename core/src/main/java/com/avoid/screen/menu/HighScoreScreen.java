@@ -15,9 +15,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Logger;
@@ -38,32 +36,22 @@ public class HighScoreScreen extends MenuScreenBase {
         Table table = new Table();
 
         TextureAtlas gamePlayAtlas = assetManager.get(AssetDescriptors.GAME_PLAY);
-        TextureAtlas uiAtlas = assetManager.get(AssetDescriptors.UI);
-        BitmapFont font= assetManager.get(AssetDescriptors.FONT);
+        Skin uiSkin = assetManager.get(AssetDescriptors.UI_SKIN);
 
         TextureRegion backgroundRegion = gamePlayAtlas.findRegion(RegionNames.BACKGROUND);
-        TextureRegion panelRegion = uiAtlas.findRegion(RegionNames.PANEL);
-
-        TextureRegion backRegion = uiAtlas.findRegion(RegionNames.BACK);
-        TextureRegion backPressedRegion = uiAtlas.findRegion(RegionNames.BACK_PRESSED);
-
-        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
 
         // Hintergrund
         table.setBackground(new TextureRegionDrawable(backgroundRegion));
 
         // Highscoretext
-        Label highScoreText = new Label("HIGHSCORE", labelStyle);
+        Label highScoreText = new Label("HIGHSCORE", uiSkin);
 
         // Highscorelabel
         String highScoreString = GameManager.INSTANCE.getHighScoreString();
-        Label highScoreLabel = new Label(highScoreString, labelStyle);
+        Label highScoreLabel = new Label(highScoreString, uiSkin);
 
         // back button
-        ImageButton backButton = new ImageButton(
-            new TextureRegionDrawable(backRegion),
-            new TextureRegionDrawable(backPressedRegion)
-        );
+        TextButton backButton = new TextButton("BACK", uiSkin);
         backButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
@@ -72,9 +60,9 @@ public class HighScoreScreen extends MenuScreenBase {
         });
 
         // setup table
-        Table contenTable = new Table();
+        Table contenTable = new Table(uiSkin);
         contenTable.defaults().pad(20);
-        contenTable.setBackground(new TextureRegionDrawable(panelRegion));
+        contenTable.setBackground(RegionNames.PANEL);
 
         contenTable.add(highScoreText).row();
         contenTable.add(highScoreLabel).row();
